@@ -8,12 +8,11 @@ const obtenerChat = async (req, res) => {
     const last30 = await Mensaje.find({
         $or: [{ de: miId, para: mensajesDe }, { de: mensajesDe, para: miId }]
     }).sort({createdAt: 'desc'})
-    .limit(30);
+    .limit(30).lean();
 
     res.json({
         ok: true,
-        miId,
-        mensajesDe
+        mensajes: last30
     })
 }
 
